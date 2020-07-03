@@ -70,6 +70,7 @@ import {
   buildFile as _buildFile,
   generateEnvModule,
   getInputsFromOutput,
+  getMetaDirImport,
   wrapCssModuleResponse,
   wrapEsmProxyResponse,
   wrapHtmlResponse,
@@ -395,11 +396,11 @@ export async function command(commandOptions: CommandOptions) {
       }
     });
 
-    if (reqPath === `/${config.buildOptions.metaDir}/hmr.js`) {
+    if (reqPath === `${getMetaDirImport(config.buildOptions)}/hmr.js`) {
       sendFile(req, res, HMR_DEV_CODE, '.js');
       return;
     }
-    if (reqPath === `/${config.buildOptions.metaDir}/env.js`) {
+    if (reqPath === `${getMetaDirImport(config.buildOptions)}/env.js`) {
       sendFile(req, res, generateEnvModule('development'), '.js');
       return;
     }
