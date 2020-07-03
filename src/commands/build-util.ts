@@ -26,8 +26,8 @@ export function getInputsFromOutput(fileLoc: string, plugins: SnowpackPlugin[]) 
   return Array.from(potentialInputs);
 }
 
-export function getMetaDirImport({ metaDir, baseUrl }: SnowpackConfig['buildOptions']) {
-  return `${baseUrl}${baseUrl.endsWith('/') ? '' : '/'}${metaDir}`
+export function getMetaDirImport({metaDir, baseUrl}: SnowpackConfig['buildOptions']) {
+  return `${baseUrl}${baseUrl.endsWith('/') ? '' : '/'}${metaDir}`;
 }
 
 /** Core Snowpack file pipeline builder */
@@ -125,10 +125,14 @@ export function wrapImportMeta({
   }
   return (
     (hmr
-      ? `import * as  __SNOWPACK_HMR__ from '${getMetaDirImport(buildOptions)}/hmr.js';\nimport.meta.hot = __SNOWPACK_HMR__.createHotContext(import.meta.url);\n`
+      ? `import * as  __SNOWPACK_HMR__ from '${getMetaDirImport(
+          buildOptions,
+        )}/hmr.js';\nimport.meta.hot = __SNOWPACK_HMR__.createHotContext(import.meta.url);\n`
       : ``) +
     (env
-      ? `import __SNOWPACK_ENV__ from '${getMetaDirImport(buildOptions)}/env.js';\nimport.meta.env = __SNOWPACK_ENV__;\n`
+      ? `import __SNOWPACK_ENV__ from '${getMetaDirImport(
+          buildOptions,
+        )}/env.js';\nimport.meta.env = __SNOWPACK_ENV__;\n`
       : ``) +
     '\n' +
     code
